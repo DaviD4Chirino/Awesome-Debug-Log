@@ -25,9 +25,9 @@ theme_override_constants/margin_bottom = 15
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugPanel" type="PanelContainer" parent="MarginContainer"]
-custom_minimum_size = Vector2(500, 200)
+custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 1
 
@@ -45,3 +45,5 @@ theme_override_constants/margin_bottom = 5
 
 [node name="LogContainer" type="VBoxContainer" parent="MarginContainer/DebugPanel/ScrollContainer/MarginContainer"]
 layout_mode = 2
+
+[connection signal="child_entered_tree" from="MarginContainer/DebugPanel/ScrollContainer/MarginContainer/LogContainer" to="." method="_on_log_container_child_entered_tree"]

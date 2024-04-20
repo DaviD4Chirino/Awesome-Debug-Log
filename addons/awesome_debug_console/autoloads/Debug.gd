@@ -1,8 +1,12 @@
 extends CanvasLayer
+## THe maximum amount of logs before they get freed (keep it low)
+@export var max_logs: int = 30
+
+@export_group("Nodes")
 @export var debug_panel: PanelContainer
 @export var logs_container: VBoxContainer
 @export var log_scene: PackedScene
-
+var t: float = 0.0
 func _ready():
 	self.log("Vector", Vector2.LEFT)
 
@@ -40,11 +44,13 @@ func _create_log(title: String, value: Variant):
 	new_log.value = value
 	return new_log
 
-func _get_logs() -> Array[Node]:
-	return logs_container.get_children()
-
 func _log_exist(title: String) -> Control:
 	for log in logs_container.get_children():
 		if log.title == title:
 			return log
 	return null
+
+func _on_log_container_child_entered_tree(node: Node) -> void:
+	if logs_container.get_child_count() > max_logs:
+		logs_container.get_child(0).queue_free()
+	pass # Replace with function body.
