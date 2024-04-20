@@ -1,4 +1,7 @@
 extends ScrollContainer
+
+@export var scroll_to_end: bool = true
+
 var max_scroll_length = 0
 @onready var scrollbar = get_v_scroll_bar()
 
@@ -7,6 +10,7 @@ func _ready():
 	max_scroll_length = scrollbar.max_value
 
 func handle_scrollbar_changed():
+	if !scroll_to_end: return
 	if max_scroll_length != scrollbar.max_value:
 		max_scroll_length = scrollbar.max_value
 		self.scroll_vertical = max_scroll_length

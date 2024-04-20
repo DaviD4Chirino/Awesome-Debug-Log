@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://puw0h1ty21ke"]
+
+[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/tab.gd" id="1_1d0ep"]
+[ext_resource type="PackedScene" uid="uid://dr1c4h3u0fa42" path="res://addons/awesome_debug_console/scenes/auto_scroll.tscn" id="1_nr7pa"]
+
+[node name="Tab" type="Control" node_paths=PackedStringArray("log_container")]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_1d0ep")
+log_container = NodePath("AutoScroll/MarginContainer/LogContainer")
+
+[node name="AutoScroll" parent="." instance=ExtResource("1_nr7pa")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AutoScroll"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="LogContainer" type="VBoxContainer" parent="AutoScroll/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
