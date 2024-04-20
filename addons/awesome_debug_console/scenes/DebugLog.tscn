@@ -1,16 +1,18 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlq6kcyvpsv14"]
 
-[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/log.gd" id="1_00gkq"]
+[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/DebugLog.gd" id="1_sl8kr"]
 
-[node name="Log" type="HBoxContainer"]
+[node name="DebugLog" type="HBoxContainer" node_paths=PackedStringArray("title_label", "value_label")]
 theme_override_constants/separation = 10
-script = ExtResource("1_00gkq")
+script = ExtResource("1_sl8kr")
+title_label = NodePath("Title")
+value_label = NodePath("Value")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-text = "UNTITLED"
+text = "UNTITLEDsdf"
 
 [node name="Value" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 0)

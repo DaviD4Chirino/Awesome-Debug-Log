@@ -1,21 +1,22 @@
 @tool
 extends HBoxContainer
 
-@export var title: String = "UNTITLED": set = set_title
+@export var title: String = &"UNTITLED": set = set_title
 var value: Variant = null: set = set_value
 
-@onready var title_label = $Title
-@onready var value_label = $Value
+@export var title_label: Label
+@export var value_label: Label
 
 func set_title(new_title: String):
+	if !title_label: return
 	title = new_title
-	title_label.text = title
+	if title:
+		title_label.text = title
+	else:
+		title_label.text = ""
 
 func set_value(new_value: Variant):
 	value = new_value
 	if !value:
 		return
 	value_label.text = str(value)
-
-func _ready():
-	self.value = InputEventKey.new()
