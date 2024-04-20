@@ -7,7 +7,7 @@ func _ready():
 	self.log("Vector", Vector2.LEFT)
 
 func _process(delta):
-	self.log("Delta", delta)
+	self.log("FPS", Engine.get_frames_per_second())
 
 func _input(event: InputEvent):
 	# shift + Tab
@@ -20,6 +20,16 @@ func _input(event: InputEvent):
 		debug_panel.visible = !debug_panel.visible
 
 func log(title: String, value: Variant):
+
+	# If theres a log with the same name we just update that, 
+	# else we create a new one
+	var existing_log: Control = _log_exist(title)
+
+	if existing_log:
+		existing_log.title = title
+		existing_log.value = value
+		return
+
 	var new_log: HBoxContainer = _create_log(title, value)
 	logs_container.add_child(new_log)
 	pass
@@ -32,3 +42,9 @@ func _create_log(title: String, value: Variant):
 
 func _get_logs() -> Array[Node]:
 	return logs_container.get_children()
+
+func _log_exist(title: String) -> Control:
+	for log in logs_container.get_children():
+		if log.title == title:
+			return log
+	return null
