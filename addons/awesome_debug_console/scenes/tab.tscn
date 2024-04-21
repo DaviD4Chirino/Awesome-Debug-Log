@@ -31,3 +31,5 @@ theme_override_constants/margin_bottom = 5
 [node name="LogContainer" type="VBoxContainer" parent="AutoScroll/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
+
+[connection signal="child_entered_tree" from="AutoScroll/MarginContainer/LogContainer" to="." method="_on_log_container_child_entered_tree"]

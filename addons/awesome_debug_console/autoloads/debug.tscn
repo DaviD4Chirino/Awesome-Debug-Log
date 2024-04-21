@@ -8,8 +8,10 @@
 process_mode = 3
 follow_viewport_enabled = true
 script = ExtResource("1_0oms6")
+logs_cap = 5
 tabs = NodePath("MarginContainer/Tabs")
 log_scene = ExtResource("2_iwgxl")
+tab_scene = ExtResource("3_skbqp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -28,6 +30,3 @@ custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-
-[node name="Log" parent="MarginContainer/Tabs" instance=ExtResource("3_skbqp")]
-layout_mode = 2

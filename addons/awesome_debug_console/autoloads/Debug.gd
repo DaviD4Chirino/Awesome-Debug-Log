@@ -1,19 +1,25 @@
 extends CanvasLayer
-@export var logs_cap: int = 30
+## The maximum amount of logs for each tab
+@export var logs_cap: int = 10
 
 @export_group("Nodes")
 # @export var debug_panel: PanelContainer
 # @export var logs_container: VBoxContainer
 @export var tabs: TabContainer
 @export var log_scene: PackedScene
+@export var tab_scene: PackedScene
+
 var t: float = 0.0
+
 func _ready():
-	self.log("Vector", InputEventMouseButton.new())
+	self.add_tab("Log")
+
+	tabs.current_tab = 0
 
 func _process(delta):
 	t += delta
-	self.log("FPS", Engine.get_frames_per_second())
-	self.log("Time Elapsed", t)
+	self.log("FPS", Engine.get_frames_per_second(), 0)
+	self.log("Time Elapsed", t, 0)
 
 func _input(event: InputEvent):
 	# shift + Tab
@@ -21,27 +27,31 @@ func _input(event: InputEvent):
 	# to add events in the editor, and i dont want to write it myself so
 	# this will do for now
 	## Replace it with whatever you want
-	if event.is_action_released(&"ui_text_dedent"):
-		# Toggle the whole screen
-		visible = !visible
-
 	if event is InputEventKey and event.is_released():
-		if event.keycode == KEY_F1:
-			self.log("Tab1")
+		match event.keycode:
+			# Toggle the whole screen
+			KEY_F1:
+				visible = !visible
 
+			## Switch between tabs by pressing F1 and F2
+			KEY_F2:
+				tabs.select_previous_available()
+			KEY_F3:
+				tabs.select_next_available()
+			
 func log(
 	title: String,
 	value: Variant=null,
-	## The tab to add the log, it must exist.
-	## Remember to use create_tab first
-	tab: int=1,
+	## The tab to add the log, indexed, it must exist.
+	## Remember to use add_tab first
+	tab: int=0,
 	## If this is set to false, it will create a new log without looking for pere-existing logs
 	unique: bool=true
 ):
-	var target_tab = get_tab(tab)
+	var target_tab = _get_tab(tab)
 	# If theres a log with the same name we just update that, 
 	# else we create a new one
-	var existing_log: Control = _log_exist(title)
+	var existing_log: Control = _log_exist(title, tab)
 
 	if unique and existing_log:
 		existing_log.title = title
@@ -61,13 +71,18 @@ func log(
 	# 	return
 	# log_container.move_child(new_log, to_index)
 
-func create_tab():
-	print(
-		"""create_debug_tab():
-		TODO:
-			ADD A CREATION TAB TOOL
-		"""
-		)
+func add_tab(
+	tab_name: String,
+	## Where you want the tab to be
+	position: int=tabs.get_child_count()
+):
+	var new_tab: Control = tab_scene.instantiate()
+	new_tab.name = tab_name
+	new_tab.logs_cap = logs_cap
+	
+	tabs.add_child(new_tab)
+
+	tabs.move_child(new_tab, position)
 
 func _create_log(title: String, value: Variant):
 	var new_log: HBoxContainer = log_scene.instantiate()
@@ -76,12 +91,12 @@ func _create_log(title: String, value: Variant):
 	return new_log
 
 func _log_exist(title: String, tab: int=0) -> Control:
-	var target_tab: Node = get_tab(tab)
+	var target_tab: Node = _get_tab(tab)
 	for log in target_tab.log_container.get_children():
 		if log.title == title:
 			return log
 	return null
 
 ## By law the only child´s of the tabs are a packed scene called tab
-func get_tab(index: int=0) -> Node:
-	return tabs.get_child(clampi(index, 0, tabs.get_child_count() - 1))
+func _get_tab(index: int=0) -> Node:
+	return tabs.get_tab_control(clampi(index, 0, tabs.get_child_count() - 1))
