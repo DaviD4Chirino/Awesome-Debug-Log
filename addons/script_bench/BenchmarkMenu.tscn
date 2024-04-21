@@ -1,0 +1,175 @@
+[gd_scene load_steps=2 format=3 uid="uid://condimu1srxjm"]
+
+[ext_resource type="Script" path="res://addons/script_bench/BenchmarkMenu.gd" id="1_wtioc"]
+
+[node name="BenchmarkMenu" type="Window" node_paths=PackedStringArray("script_path", "method_selector", "param_container", "param_type_selector", "param_static_container", "param_static", "param_generator_container", "param_generator_selector", "run_count", "warmup_count", "run_button")]
+title = "[ScriptBench] Benchmark Method..."
+initial_position = 2
+size = Vector2i(512, 256)
+transient = true
+script = ExtResource("1_wtioc")
+script_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/ScriptPath")
+method_selector = NodePath("VBoxContainer/VBoxContainer/HBoxContainer2/Method")
+param_container = NodePath("VBoxContainer/VBoxContainer/MarginContainer")
+param_type_selector = NodePath("VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer5/ParamType")
+param_static_container = NodePath("VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer7")
+param_static = NodePath("VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer7/StaticParam")
+param_generator_container = NodePath("VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer6")
+param_generator_selector = NodePath("VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer6/ParamGenerator")
+run_count = NodePath("VBoxContainer/VBoxContainer/HBoxContainer3/RunCount")
+warmup_count = NodePath("VBoxContainer/VBoxContainer/HBoxContainer4/WarmupCount")
+run_button = NodePath("VBoxContainer/Control/HBoxContainer/Run")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Script Path"
+horizontal_alignment = 2
+
+[node name="ScriptPath" type="LineEdit" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Method Name"
+horizontal_alignment = 2
+
+[node name="Method" type="OptionButton" parent="VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+popup/item_0/text = ""
+popup/item_0/id = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Run Count"
+horizontal_alignment = 2
+
+[node name="RunCount" type="SpinBox" parent="VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1000.0
+max_value = 100000.0
+value = 10000.0
+allow_greater = true
+update_on_text_changed = true
+custom_arrow_step = 1000.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Warmup Count"
+horizontal_alignment = 2
+
+[node name="WarmupCount" type="SpinBox" parent="VBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 10.0
+value = 3.0
+allow_greater = true
+update_on_text_changed = true
+custom_arrow_step = 1.0
+
+[node name="MarginContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parameter Type"
+horizontal_alignment = 2
+
+[node name="ParamType" type="OptionButton" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+selected = 0
+popup/item_0/text = "Static"
+popup/item_0/id = 0
+popup/item_1/text = "Generated"
+popup/item_1/id = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parameter Generator"
+horizontal_alignment = 2
+
+[node name="ParamGenerator" type="OptionButton" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+popup/item_0/text = ""
+popup/item_0/id = 0
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Static Parameter"
+horizontal_alignment = 2
+
+[node name="StaticParam" type="LineEdit" parent="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control"]
+layout_mode = 2
+
+[node name="LeftPad" type="Control" parent="VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Run" type="Button" parent="VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Run Benchmark"
+
+[node name="RightPad" type="Control" parent="VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="text_changed" from="VBoxContainer/VBoxContainer/HBoxContainer/ScriptPath" to="." method="_on_script_path_text_changed" unbinds=1]
+[connection signal="item_selected" from="VBoxContainer/VBoxContainer/HBoxContainer2/Method" to="." method="_validate_selections" unbinds=1]
+[connection signal="item_selected" from="VBoxContainer/VBoxContainer/MarginContainer/HBoxContainer5/ParamType" to="." method="_on_param_type_item_selected"]
+[connection signal="pressed" from="VBoxContainer/Control/HBoxContainer/Run" to="." method="_on_benchmark_pressed"]

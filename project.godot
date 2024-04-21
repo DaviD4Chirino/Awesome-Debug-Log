@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Awesome Debug Console"
+config/name="Awesome Debug Log"
 config/features=PackedStringArray("4.2")
-config/icon="res://icon.svg"
+boot_splash/image="res://assets/Awesome Debug Log 1920x1920.png"
+config/icon="res://assets/Awesome Debug Log 50x50.png"
 
 [autoload]
 
@@ -33,7 +34,11 @@ project/assembly_name="Awesome Godot Plugin Template"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/awesome_debug_console/plugin.cfg", "res://addons/nv.file_system/plugin.cfg", "res://addons/save_system/plugin.cfg")
+enabled=PackedStringArray("res://addons/nv.file_system/plugin.cfg", "res://addons/save_system/plugin.cfg", "res://addons/script_bench/plugin.cfg")
+
+[godots]
+
+version_hint=""
 
 [rendering]
 

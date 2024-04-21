@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://np03sxuohq70"]
 
-[ext_resource type="Script" path="res://addons/awesome_debug_console/autoloads/Debug.gd" id="1_0oms6"]
-[ext_resource type="PackedScene" uid="uid://dlq6kcyvpsv14" path="res://addons/awesome_debug_console/scenes/DebugLog.tscn" id="2_iwgxl"]
-[ext_resource type="PackedScene" uid="uid://puw0h1ty21ke" path="res://addons/awesome_debug_console/scenes/tab.tscn" id="3_skbqp"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/autoloads/Debug.gd" id="1_0oms6"]
+[ext_resource type="PackedScene" uid="uid://dlq6kcyvpsv14" path="res://addons/awesome_debug_log/scenes/DebugLog.tscn" id="2_iwgxl"]
+[ext_resource type="PackedScene" uid="uid://puw0h1ty21ke" path="res://addons/awesome_debug_log/scenes/tab.tscn" id="3_skbqp"]
 
 [node name="Debug" type="CanvasLayer" node_paths=PackedStringArray("tabs")]
 process_mode = 3
 follow_viewport_enabled = true
 script = ExtResource("1_0oms6")
-logs_cap = 5
+logs_cap = 3
 tabs = NodePath("MarginContainer/Tabs")
 log_scene = ExtResource("2_iwgxl")
 tab_scene = ExtResource("3_skbqp")
@@ -30,3 +30,6 @@ custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+
+[node name="Logs" parent="MarginContainer/Tabs" instance=ExtResource("3_skbqp")]
+layout_mode = 2

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://puw0h1ty21ke"]
 
-[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/tab.gd" id="1_1d0ep"]
-[ext_resource type="PackedScene" uid="uid://dr1c4h3u0fa42" path="res://addons/awesome_debug_console/scenes/auto_scroll.tscn" id="1_nr7pa"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/scenes/tab.gd" id="1_1d0ep"]
+[ext_resource type="PackedScene" uid="uid://dr1c4h3u0fa42" path="res://addons/awesome_debug_log/scenes/auto_scroll.tscn" id="1_nr7pa"]
 
 [node name="Tab" type="Control" node_paths=PackedStringArray("log_container")]
 layout_mode = 3

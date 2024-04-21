@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlq6kcyvpsv14"]
 
-[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/DebugLog.gd" id="1_sl8kr"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/scenes/DebugLog.gd" id="1_sl8kr"]
 
 [node name="DebugLog" type="HBoxContainer" node_paths=PackedStringArray("title_label", "value_label")]
 theme_override_constants/separation = 10

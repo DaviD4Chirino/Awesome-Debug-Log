@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dr1c4h3u0fa42"]
 
-[ext_resource type="Script" path="res://addons/awesome_debug_console/scenes/auto_scroll.gd" id="1_pc372"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/scenes/auto_scroll.gd" id="1_pc372"]
 
 [node name="AutoScroll" type="ScrollContainer"]
 offset_right = 40.0
