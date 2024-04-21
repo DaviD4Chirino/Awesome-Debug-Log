@@ -10,14 +10,12 @@ extends CanvasLayer
 @export var log_scene: PackedScene
 @export var tab_scene: PackedScene
 
-var t: float = 0.0
-
 func _ready():
 	assert(tabs.get_tab_count() > 0, "There must be at least one tab")
+	tabs.get_tab_control(0).logs_cap = logs_cap
 
 func _process(delta):
-	t += delta
-	self.log("FPS", "%.2f" % (1.0 / delta), "", false)
+	self.log("FPS", "%.2f" % (1.0 / delta), "Other Tab", false)
 
 func _input(event: InputEvent):
 	## Replace it with whatever you want
@@ -84,18 +82,26 @@ func remove_tab(tab_name: String):
 		if existing_tab.name == tab_name:
 			existing_tab.queue_free()
 			return
+			
+func _get_tab_control(tab_name: String) -> Control:
+	for tab_idx in tabs.get_tab_count():
+		var existing_tab: Control = tabs.get_tab_control(tab_idx)
+		if existing_tab.name == tab_name:
+			return existing_tab
+	return null
 
 ## Gets the Control node of the tab_name, if theres none prints an error and returns the first tab
 func _get_tab(tab_name: String) -> Control:
 	if tab_name == "":
 		return tabs.get_tab_control(0)
 		
-	for tab_idx in tabs.get_tab_count():
-		var existing_tab: Control = tabs.get_tab_control(tab_idx)
-		if existing_tab.name == tab_name:
-			return existing_tab
+	var existing_tab = _get_tab_control(tab_name)
+
+	if existing_tab:
+		return existing_tab
+
 	printerr(
-		"Debug Log: There´s no tab with the name of %s" % tab_name
+		"Debug Log: Theres no tab with the name of -- %s" % tab_name
 	)
 	return tabs.get_tab_control(0)
 
@@ -107,15 +113,59 @@ func _get_tab_index(tab_name: String) -> int:
 			return tab_idx
 
 	return - 1
-
-func _update_tab(
+##Changes a bunch of properties of a tab at once, this method is preferable if you want to change two or more things of a tab
+func update_tab(
 	tab_name: String,
 	new_tab_name: String="",
 	move_to_position: int=- 1,
-	caped_at: int=- 1
-):
-	pass
+	capped_at: int=- 1
+) -> bool:
+	var tab: Control = _get_tab_control(tab_name)
+	if tab:
+		if new_tab_name != "":
+			tab.name = new_tab_name
+		if move_to_position >= 0:
+			tabs.move_child(
+				tab,
+				move_to_position if move_to_position >= 0
+					and move_to_position < tabs.get_tab_count()
+				else tabs.get_tab_count()
+			)
+		if capped_at >= 0:
+			tab.logs_cap = capped_at
+		return true
 
+	return false
+
+## Changes the name of a tab, returns true if successful or false if not
+func update_tab_name(tab_name: String, new_tab_name: String) -> bool:
+	var tab: Control = _get_tab_control(tab_name)
+	if tab:
+		tab.name = new_tab_name
+		return true
+	return false
+
+## Changes the position of a tab, returns true if successful or false if not
+func update_tab_position(tab_name: String, new_position: int) -> bool:
+	var tab: Control = _get_tab_control(tab_name)
+	if tab:
+		tabs.move_child(
+			tab,
+			new_position if new_position >= 0
+				and new_position < tabs.get_tab_count()
+			else tabs.get_tab_count()
+		)
+		return true
+	return false
+
+## Changes the cap of the logs from tab, returns true if successful or false if not
+func update_tab_log_cap(tab_name: String, new_cap: int) -> bool:
+	var tab: Control = _get_tab_control(tab_name)
+	if tab:
+		tab.logs_cap = new_cap
+		return true
+	return false
+	
 func _create_log(title: String, value: Variant):
 	var new_log: HBoxContainer = log_scene.instantiate()
 	new_log.title = title
