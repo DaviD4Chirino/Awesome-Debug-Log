@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyjaccwiosvwq"]
+[gd_scene load_steps=4 format=3 uid="uid://dyjaccwiosvwq"]
 
 [ext_resource type="Script" path="res://addons/awesome_debug_log/editor/update button/update_button.gd" id="1_n2nq1"]
-[ext_resource type="PackedScene" uid="uid://bsl6du60suv5q" path="res://addons/awesome_debug_log/editor/update button/download_update.tscn" id="2_f5yit"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/editor/update button/download_update.gd" id="2_0ef7m"]
+[ext_resource type="Texture2D" uid="uid://f6lqmxobyqtf" path="res://addons/awesome_debug_log/Awesome Debug Log Logo.png" id="3_rels2"]
 
 [node name="UpdateButton" type="Button" node_paths=PackedStringArray("http_request", "download_dialog", "update_failed_dialog", "download_update_panel")]
 visible = false
@@ -28,12 +29,62 @@ title = ""
 size = Vector2i(300, 250)
 ok_button_text = "Close"
 
-[node name="DownloadUpdate" parent="DownloadDialog" instance=ExtResource("2_f5yit")]
-offset_left = -142.0
-offset_top = 8.0
-offset_right = 142.0
-offset_bottom = 201.0
-addon_name = "awesome_scene_manager"
+[node name="DownloadUpdate" type="Control" parent="DownloadDialog" node_paths=PackedStringArray("http_request", "label", "download_button", "release_notes_button")]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("2_0ef7m")
+addon_name = "awesome_debug_log"
+http_request = NodePath("HTTPRequest")
+label = NodePath("VBoxContainer/Version")
+download_button = NodePath("VBoxContainer/CenterContainer/DownloadButton")
+release_notes_button = NodePath("VBoxContainer/CenterContainer2/LinkButton")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="DownloadDialog/DownloadUpdate"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DownloadDialog/DownloadUpdate"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.5
+offset_right = 54.5
+offset_bottom = 171.0
+grow_horizontal = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="DownloadDialog/DownloadUpdate/VBoxContainer"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+texture = ExtResource("3_rels2")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="DownloadDialog/DownloadUpdate/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "v1.2.3 available for download"
+
+[node name="CenterContainer" type="CenterContainer" parent="DownloadDialog/DownloadUpdate/VBoxContainer"]
+layout_mode = 2
+
+[node name="DownloadButton" type="Button" parent="DownloadDialog/DownloadUpdate/VBoxContainer/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Download and install update"
+
+[node name="CenterContainer2" type="CenterContainer" parent="DownloadDialog/DownloadUpdate/VBoxContainer"]
+layout_mode = 2
+
+[node name="LinkButton" type="LinkButton" parent="DownloadDialog/DownloadUpdate/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+text = "Read release notes..."
+uri = "https://github.com/DaviD4Chirino/Awesome-Debug-Log/releases"
 
 [node name="UpdateFailedDialog" type="AcceptDialog" parent="."]
 position = Vector2i(0, 36)
@@ -48,3 +99,6 @@ ok_button_text = "Accept"
 dialog_text = "All the files are up to date"
 
 [node name="Timer" type="Timer" parent="."]
+
+[connection signal="request_completed" from="DownloadDialog/DownloadUpdate/HTTPRequest" to="DownloadDialog/DownloadUpdate" method="_on_http_request_request_completed"]
+[connection signal="pressed" from="DownloadDialog/DownloadUpdate/VBoxContainer/CenterContainer/DownloadButton" to="DownloadDialog/DownloadUpdate" method="_on_download_button_pressed"]

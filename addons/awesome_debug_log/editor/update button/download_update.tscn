@@ -58,7 +58,7 @@ layout_mode = 2
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/CenterContainer2"]
 layout_mode = 2
 text = "Read release notes..."
-uri = "https://github.com/DaviD4Chirino/Awesome-Input-Icons/releases"
+uri = "https://github.com/DaviD4Chirino/Awesome-Debug-Log/releases"
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/DownloadButton" to="." method="_on_download_button_pressed"]

@@ -8,7 +8,6 @@
 process_mode = 3
 follow_viewport_enabled = true
 script = ExtResource("1_0oms6")
-logs_cap = 3
 tabs = NodePath("MarginContainer/Tabs")
 log_scene = ExtResource("2_iwgxl")
 tab_scene = ExtResource("3_skbqp")
