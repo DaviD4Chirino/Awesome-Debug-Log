@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsl6du60suv5q"]
 
-[ext_resource type="Script" path="res://update button/download_update.gd" id="1_iatpf"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/editor/update button/download_update.gd" id="1_iatpf"]
 [ext_resource type="Texture2D" uid="uid://d1b8huyk1nccb" path="res://icon.svg" id="2_er6hc"]
 
 [node name="DownloadUpdate" type="Control" node_paths=PackedStringArray("http_request", "label", "download_button", "release_notes_button")]

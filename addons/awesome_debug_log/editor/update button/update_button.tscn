@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyjaccwiosvwq"]
 
-[ext_resource type="Script" path="res://update button/update_button.gd" id="1_n2nq1"]
-[ext_resource type="PackedScene" uid="uid://bsl6du60suv5q" path="res://update button/download_update.tscn" id="2_f5yit"]
+[ext_resource type="Script" path="res://addons/awesome_debug_log/editor/update button/update_button.gd" id="1_n2nq1"]
+[ext_resource type="PackedScene" uid="uid://bsl6du60suv5q" path="res://addons/awesome_debug_log/editor/update button/download_update.tscn" id="2_f5yit"]
 
 [node name="UpdateButton" type="Button" node_paths=PackedStringArray("http_request", "download_dialog", "update_failed_dialog", "download_update_panel")]
 anchors_preset = 15

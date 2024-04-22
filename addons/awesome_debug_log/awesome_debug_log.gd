@@ -1,13 +1,13 @@
 @tool
 extends EditorPlugin
+## If you want the autoload to have a diferent name, 
+## FIRST Deactivate the addon
+## then reactive the addon
+const DEBUG_AUTOLOAD_NAME = "Debug"
+const DEBUG_AUTOLOAD_PATH: String = "res://addons/awesome_debug_log/autoloads/debug.tscn"
 
 func _enter_tree() -> void:
-	InputMap.add_action(&"DEBUG_ACTION_TOGGLE_CONSOLE")
-	# InputMap.action_add_event(&"DEBUG_ACTION_TOGGLE_CONSOLE",)
-
-	# Initialization of the plugin goes here.
-	pass
+	add_autoload_singleton(DEBUG_AUTOLOAD_NAME, DEBUG_AUTOLOAD_PATH)
 
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	pass
+	remove_autoload_singleton(DEBUG_AUTOLOAD_NAME)

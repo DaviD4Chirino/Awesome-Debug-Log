@@ -14,9 +14,6 @@ func _ready():
 	assert(tabs.get_tab_count() > 0, "There must be at least one tab")
 	tabs.get_tab_control(0).logs_cap = logs_cap
 
-func _process(delta):
-	self.log("FPS", "%.2f" % (1.0 / delta), "Other Tab", false)
-
 func _input(event: InputEvent):
 	## Replace it with whatever you want
 	# I used Keycode because i don´t see how to add a custom action to the input map
