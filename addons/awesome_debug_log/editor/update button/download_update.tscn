@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsl6du60suv5q"]
 
 [ext_resource type="Script" path="res://addons/awesome_debug_log/editor/update button/download_update.gd" id="1_iatpf"]
-[ext_resource type="Texture2D" uid="uid://d1b8huyk1nccb" path="res://icon.svg" id="2_er6hc"]
+[ext_resource type="Texture2D" uid="uid://f6lqmxobyqtf" path="res://addons/awesome_debug_log/Awesome Debug Log Logo.png" id="2_vfv0g"]
 
 [node name="DownloadUpdate" type="Control" node_paths=PackedStringArray("http_request", "label", "download_button", "release_notes_button")]
 layout_mode = 3
@@ -12,6 +12,7 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_iatpf")
+addon_name = "awesome_debug_log"
 http_request = NodePath("HTTPRequest")
 label = NodePath("VBoxContainer/Version")
 download_button = NodePath("VBoxContainer/CenterContainer/DownloadButton")
@@ -34,7 +35,7 @@ alignment = 1
 [node name="Icon" type="TextureRect" parent="VBoxContainer"]
 custom_minimum_size = Vector2(50, 100)
 layout_mode = 2
-texture = ExtResource("2_er6hc")
+texture = ExtResource("2_vfv0g")
 expand_mode = 3
 stretch_mode = 5
 
