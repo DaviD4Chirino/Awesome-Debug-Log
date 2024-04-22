@@ -29,14 +29,15 @@ func _input(event: InputEvent):
 				tabs.select_previous_available()
 			KEY_F3:
 				tabs.select_next_available()
-			
+
+## Shows a log in the panel
 func log(
 	title: String,
 	value: Variant=null,
 	## The tab to add the log, indexed, it must exist.
 	## Remember to use add_tab first
 	tab: String="",
-	## If this is set to false, it will create a new log without looking for pere-existing logs
+	## If this is set to false, it will create a new log without looking for pre-existing logs
 	unique: bool=true
 ):
 	
@@ -54,6 +55,7 @@ func log(
 	var new_log: HBoxContainer = _create_log(title, value)
 	log_container.add_child(new_log)
 
+## Adds a new tab, if theres already a tab with the same name, it will issue a warning and return
 func add_tab(
 	tab_name: String,
 	## Where you want the tab to be, less than 0 put it at the end
@@ -62,6 +64,12 @@ func add_tab(
 	## [b] a value of 0 means uncapped[/b]
 	capped_at: int=0
 ):
+	var existing_tab = _get_tab_control(tab_name)
+
+	if existing_tab:
+		push_warning("Tab already exist")
+		return
+	
 	var new_tab: Control = tab_scene.instantiate()
 	new_tab.name = tab_name
 	new_tab.logs_cap = capped_at if capped_at >= 0 else logs_cap
@@ -110,6 +118,7 @@ func _get_tab_index(tab_name: String) -> int:
 			return tab_idx
 
 	return - 1
+
 ##Changes a bunch of properties of a tab at once, this method is preferable if you want to change two or more things of a tab
 func update_tab(
 	tab_name: String,
