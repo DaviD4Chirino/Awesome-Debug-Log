@@ -18,7 +18,6 @@ config/icon="res://assets/Awesome Debug Log 50x50.png"
 [autoload]
 
 SaveSystem="*res://addons/save_system/save_system.gd"
-Debug="*res://addons/awesome_debug_log/autoloads/debug.tscn"
 
 [display]
 
@@ -35,7 +34,7 @@ project/assembly_name="Awesome Godot Plugin Template"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/awesome_debug_log/plugin.cfg", "res://addons/nv.file_system/plugin.cfg", "res://addons/save_system/plugin.cfg", "res://addons/script_bench/plugin.cfg")
+enabled=PackedStringArray("res://addons/nv.file_system/plugin.cfg", "res://addons/save_system/plugin.cfg", "res://addons/script_bench/plugin.cfg")
 
 [godots]
 

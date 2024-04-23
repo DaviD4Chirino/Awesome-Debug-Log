@@ -11,8 +11,10 @@ extends CanvasLayer
 @export var tab_scene: PackedScene
 
 func _ready():
-	assert(tabs.get_tab_count() > 0, "There must be at least one tab")
-	tabs.get_tab_control(0).logs_cap = logs_cap
+	self.add_tab("Logs")
+
+func _process(delta):
+	self.log("FPS", "%.2f" % (1.0 / delta))
 
 func _input(event: InputEvent):
 	## Replace it with whatever you want
@@ -34,12 +36,14 @@ func _input(event: InputEvent):
 func log(
 	title: String,
 	value: Variant=null,
-	## The tab to add the log, indexed, it must exist.
-	## Remember to use add_tab first
+	## The tab the log belong to, if theres no tab with that name, it will return the first tab
 	tab: String="",
 	## If this is set to false, it will create a new log without looking for pre-existing logs
 	unique: bool=true
 ):
+	if tabs.get_tab_count() <= 0:
+		printerr("Theres no tabs")
+		return
 	
 	var target_tab = _get_tab(tab)
 	# If theres a log with the same name we just update that, 
@@ -82,12 +86,22 @@ func add_tab(
 	)
 
 func remove_tab(tab_name: String):
+	if tabs.get_tab_count() <= 0:
+		printerr("Theres no tabs")
+		return
+
+	var existing_tab = _get_tab_control(tab_name)
+	if !existing_tab:
+		printerr("There´s no tab with that name")
+		return
+
 	for tab_idx in tabs.get_tab_count():
-		var existing_tab: Control = tabs.get_tab_control(tab_idx)
-		if existing_tab.name == tab_name:
-			existing_tab.queue_free()
+		var _existing_tab: Control = tabs.get_tab_control(tab_idx)
+		if _existing_tab.name == tab_name:
+			_existing_tab.queue_free()
 			return
-			
+
+## Its TabContainer.get_tab_control but by using a tab name instead of an index
 func _get_tab_control(tab_name: String) -> Control:
 	for tab_idx in tabs.get_tab_count():
 		var existing_tab: Control = tabs.get_tab_control(tab_idx)
@@ -130,6 +144,7 @@ func update_tab(
 	if tab:
 		if new_tab_name != "":
 			tab.name = new_tab_name
+
 		if move_to_position >= 0:
 			tabs.move_child(
 				tab,
@@ -137,8 +152,10 @@ func update_tab(
 					and move_to_position < tabs.get_tab_count()
 				else tabs.get_tab_count()
 			)
+
 		if capped_at >= 0:
 			tab.logs_cap = capped_at
+
 		return true
 
 	return false
