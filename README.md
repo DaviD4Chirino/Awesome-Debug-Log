@@ -1,46 +1,199 @@
-# Save Made Easy - A simple, diverse Save/Load plugin for Godot 4
-An easy to use, versatile Save/Load System inspired by the simplicity of Unity's PlayerPrefs. Supports nested variables, Resources and encryption.
-I've browsed multiple forum sites and checked the Asset Library, only to find out there are no plugins made to simplify saving data really, while this is default built-in functionality in Unity.
-New programmers (and people who don't want to spend too much time coding) shouldn't have to struggle with save systems, as they are quite finicky to debug if something is not set up right in the core code. Thus, here we go.
-This compact plugin stores all the data in an encrypted save file (encoded with the player's unique OS ID - meaning, players cannot exchange save files), which is automatically loaded at start-up.
 
-# Instructions
-1. Download the plugin from the Godot Asset Library or the zip file of this repo by clicking on "Code", and the "Local" menu. You should see a "Download ZIP" option.
-2. If you downloaded manually, place the addons/save_system file into your project directory, ideally into a folder called "addons".
-3. Go to Godot's Plugins tab (Project -> Project Settings -> Plugins) and tick "Enable" by the plugin. (If the plugin doesn't show up, you may need to restart the editor.)
-4. You're good to go! Don't forget to read the documentation. You can modify the save file name ("const file_name") at the top of the SaveSystem.gd script.
+# Awesome Debug Log
 
-# Contact
-If you have any questions/concerns or just wanna say hi, you can message me on [Twitter](https://twitter.com/olcgreen) or add me on Discord. My handle is olcgreen on both.
+Display values with titles into a panel in-game
 
-# Documentation
-While you can find complete documentation in the plugin code, let me highlight the most important functions:
-- set_var(key_path, value): **Use this for storing a variable.**
-- get_var(key_path, default): **Use this for retrieving a variable.** If the variable at "key_path" doesn't exist, "default" is returned.
-- delete(key_path): **Deletes variable at "key_path".**
-- delete_all: **Deletes all data.** (Still need to call save() for the file to be overwritten.)
-- has(key_path): **Checks if a variable exists at "key_path".**
-- save: **Use this to save data and write the file.**
+![Addon Logo](<assets/Awesome Debug Log 1920x1920.png>)
 
-You can also notice functions intended for internal use begin their names with an underscore in the code.
+![GitHub License](https://img.shields.io/github/license/DaviD4Chirino/Awesome-Debug-Log) ![GitHub Release](https://img.shields.io/github/v/release/DaviD4Chirino/Awesome-Debug-Log) ![GitHub Stars](https://img.shields.io/github/stars/DaviD4Chirino/Awesome-Debug-Log)
 
-**Note: Your save file will go into what Godot refers to as the user:// directory, on Windows, this is C:\Users\UserName\AppData\Roaming\Godot\app_userdata.**
+## Features
 
-# Demonstration
-_Here's a class of our Resource created for testing this system:_
+* Console log *But in game!* No more need to minimize the game screen
+* Order your logs with *Tabs*
+* Easy [keyboard based navigation](#navigating-between-tabs)
 
+## Installation
 
-![Screenshot_43](https://github.com/AdamKormos/SaveMadeEasy/assets/49873113/d9547f06-9253-4005-9e3b-989ca69e92f3)
+### From The AssetLib
 
-_You may use the set_var and get_var variables of the SaveSystem Singleton for the core functionality: (This code sample can be found in SaveSystem.gd)_
+* Open the AssetLib tab in your project and search for **Awesome Debug Log**
+* Open it and select install, from there follow the instructions
+* Finally, go to *Project/Project Settings/Plugins* and activate **awesome-debug-log**
 
-![Screenshot_41](https://github.com/AdamKormos/SaveMadeEasy/assets/49873113/f860e709-c108-4ebc-a0f8-c18e3e7925af)
+### Manually
 
-**Nesting is expressed by the colon symbol (:). You may also access dictionary values with this notation.**
+* Go to [Releases](https://github.com/DaviD4Chirino/Awesome-Debug-Log/releases/latest) and download the Source code, inside will be a folder called
+  
+  **awesome-debug-log** (it may be nested)
+  * UPDATE THIS WHEN THE ADDON BEEN GREENLITED
 
-# Support
-If you like my work and wanna support me, please consider checking out my [YouTube](https://www.youtube.com/@AdamsGodotTutorials) channel, which has a handful of tutorials - with more to come as time goes on!
+> You can also get it from the [Godot Asset Library](https://godotengine.org/asset-library/asset)
+>
 
-I also have a [Discord](https://discord.gg/vhpYfYZSWh) server for my community, you're welcome to hop in. :)
+* Go to the root of your project and open the **addons folder** (create it if there's none)
+* Finally, go to *Project/Project Settings/Plugins* and activate **awesome-debug-log**
 
-Aaand last but not least, I'm working on games too. Wishlists are appreciated! [Odyssey of Dremid'ir](https://store.steampowered.com/app/2134530/Odyssey_of_Dremidir/) is a hand-drawn RPG, and [Frieseria](https://store.steampowered.com/app/2591170/Frieseria_The_Grand_Reopening/) is a restaurant management game.
+## Usage
+
+With the addon active, an Autoload called **Debug** will be added, then call **Debug.callable** with any of the below functions, the most important is:
+
+### `log`
+
+Call **Debug.log()** anywhere in your scripts to start displaying your values.
+
+| Arguments | Type   | Value | Comment                                                                                                 |
+| --------- | ------ | ----- | ------------------------------------------------------------------------------------------------------- |
+| title     | String |       |                                                                                                         |
+| tab       | String | ""    | The tab the log belongs to, if there's no tab with that name or its empty, it will log in the first tab |
+| unique    | bool   | true  | If this is set to false, it will create a new log without looking for pre-existing logs       |
+
+Creates a new line in the selected tab, if there's already a line with the same title it will update that instead unless specified.
+
+In this case, to display the frames per second we call the **log** function with "FPS" as the **title** and a string that divides delta by 1.0 as the **value**.
+We don´t care about the other values.
+
+``` GDScript
+func _process(delta):
+    Debug.log("FPS", "%.2f" % (1.0 / delta))
+```
+
+Then it will show like so:
+![Debug.log demo](3HIiT7WnLr.gif)
+
+### `add_tab`
+
+| Arguments   | Type   | Value | Comment                                                                       |
+| ----------- | ------ | ----- | ----------------------------------------------------------------------------- |
+| tab_name    | String |       |                                                                               |
+| at_position | int    | -1    | Where you want the tab to be, less than 0 puts it at the end                  |
+| capped_at   | int    | 0     | The maximum number of logs that tab can have, **a value of 0 means uncapped** |
+
+Adds a new tab, if there's already a tab with the same name, it will issue a warning and return
+
+After that, you can log your values in that tab by referencing the name like so:
+
+```GDScript
+func _ready():
+    Debug.add_tab("New Tab")
+ Debug.log("Vector right", Vector2.RIGHT, "New Tab")
+```
+
+![Adding a new tab example](Godot_v4.2.2-stable_mono_win64_9TPoN8A2Kq.png)
+
+### `remove_tab`
+
+| Arguments | Type   |
+| --------- | ------ |
+| tab_name  | String |
+
+You can similarly delete tabs with the same name, if there's no tabs or there's no tab with that name, it will print an error and return
+
+### Modifying already existing tabs
+
+This is a tandem of 3 functions and a general function for changing properties of an existing tab. All of them returns true or false if they succeeded or failed on updating their property
+
+#### `update_tab`
+
+With the name of the tab, you can change all its properties. Use it when you want to change 2 or more properties at once
+
+| Arguments        | Type   | Value | Comment |
+| ---------------- | ------ | ----- | ------- |
+| tab_name         | String |       |         |
+| new_tab_name     | String | ""    |         |
+| move_to_position | int    | -1    |         |
+| capped_at        | int    | -1    |         |
+
+If you want to change only one of those properties, use the following:
+
+#### `update_tab_name`
+
+| Arguments    | Type   |
+| ------------ | ------ |
+| tab_name     | String |
+| new_tab_name | String |
+
+Changes the name of a tab with a new one
+
+#### `update_tab_position`
+
+| Arguments    | Type   |
+| ------------ | ------ |
+| tab_name     | String |
+| new_position | int    |
+
+Changes the position of a tab to the one selected, the value is clamped between 0 and the maximum number of caps (so don't worry about it)
+
+#### `update_tab_log_cap`
+
+| Arguments | Type   |
+| --------- | ------ |
+| tab_name  | String |
+| new_cap   | int    |
+
+Changes the cap of the logs from tab
+
+### Utility functions
+
+There are a bunch of utility functions inside **Debug.gd** and they are *(mostly)* documented or self explanatory, you can see them by using the auto docs from Godot themselves
+
+## Navigating between tabs
+
+Apart from clicking on them like normal, you can use the **Function Keys** to travel between the tabs and toggle the panel altogether.
+
+### F1
+
+**Hides/Shows** the panel
+
+### F2
+
+Selects the **previous** tab
+
+### F3
+
+Selects the **next** tab
+
+### Changing the hotkeys
+
+Right now it checks for the physical keycode of the input received, this is so because i cant create a input event for you to easily modify.
+
+So if you want different hotkeys you´ll have to modify it to listen to whatever you want
+
+Heres the whole **input function** in **Debug.gd**
+
+```GDScript
+func _input(event: InputEvent):
+
+    ## Replace it with whatever you want
+
+    # I used Keycode because i don´t see how to add a custom action to the input map
+
+    # Well, more like i don´t WANT to make a way, so I used physical keycode
+
+    if event is InputEventKey and event.is_released():
+
+        match event.keycode:
+
+            # Toggle the whole screen
+
+            KEY_F1:
+
+                visible = !visible
+
+  
+
+            # Switch between tabs by pressing F1 and F2
+
+            KEY_F2:
+
+                tabs.select_previous_available()
+
+            KEY_F3:
+
+                tabs.select_next_available()
+```
+
+I just called `tabs.select_previous_available/next_available`
+And toggle the visibility using this line:`visible = !visible`
+
+---
